@@ -1,6 +1,6 @@
 FROM java:openjdk-8u45-jre
 
-MAINTAINER David Gageot <david.gageot@sonarsource.com>
+MAINTAINER Discovery Dev <adsdiscoveryteam@pillartechnology.com>
 
 ENV SONARQUBE_HOME /opt/sonarqube
 
@@ -39,4 +39,4 @@ VOLUME ["$SONARQUBE_HOME/data", "$SONARQUBE_HOME/extensions"]
 WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/
 COPY sonar-objective-c-plugin-0.4.0.jar $SONARQUBE_HOME/extensions/plugins/
-ENTRYPOINT ["./bin/run.sh"]
+ENTRYPOINT ["$SONARQUBE_HOME/bin/run.sh"]
