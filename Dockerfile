@@ -38,5 +38,6 @@ VOLUME ["$SONARQUBE_HOME/data", "$SONARQUBE_HOME/extensions"]
 
 WORKDIR $SONARQUBE_HOME
 COPY run.sh $SONARQUBE_HOME/bin/
+COPY sonar.properties $SONARQUBE_HOME/conf/
 COPY sonar-objective-c-plugin-0.4.0.jar $SONARQUBE_HOME/extensions/plugins/
 ENTRYPOINT ["./bin/run.sh"]
