@@ -1,42 +1,20 @@
-FROM java:openjdk-8u45-jre
-
+FROM java:openjdk-7-jre
 MAINTAINER Discovery Dev <adsdiscoveryteam@pillartechnology.com>
 
 ENV SONARQUBE_HOME /opt/sonarqube
 
-# Http port
-EXPOSE 9000
+RUN echo "deb http://downloads.sourceforge.net/project/sonar-pkg/deb binary/" >> /etc/apt/sources.list
+RUN apt-get update && apt-get clean ### Sonar version 5.1 - timestamp
 
-# H2 Database port
-EXPOSE 9092
+RUN apt-get install -y --force-yes sonar=5.1
 
-# Database configuration
-# Defaults to using H2
-ENV SONARQUBE_JDBC_USERNAME sonar
-ENV SONARQUBE_JDBC_PASSWORD sonar
-ENV SONARQUBE_JDBC_URL jdbc:postgresql://192.168.8.35/sonar
+COPY assets/init /app/init
+RUN chmod 755 /app/init
 
-ENV SONAR_VERSION 5.1.1
+VOLUME /opt/sonar/extensions
+VOLUME /opt/sonar/logs/
 
-# pub   2048R/24452160 2011-11-01 [expires: 2016-12-15]
-#       Key fingerprint = A58D 5AF5 4809 A8A6 3F45  8BBD 56CD 8D5D 2445 2160
-# uid                  Eric Hartmann <eric.hartmann@sonarsource.com>
-# sub   2048R/562C56C0 2011-11-01 [expires: 2016-12-15]
-RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 56CD8D5D24452160
-
-RUN set -x \
-  && cd /opt \
-  && curl -o sonarqube.zip -fSL http://downloads.sonarsource.com/sonarqube/sonarqube-$SONAR_VERSION.zip \
-  && curl -o sonarqube.zip.asc -fSL http://downloads.sonarsource.com/sonarqube/sonarqube-$SONAR_VERSION.zip.asc \
-  && gpg --verify sonarqube.zip.asc \
-  && unzip sonarqube.zip \
-  && mv sonarqube-$SONAR_VERSION sonarqube \
-  && rm sonarqube.zip* \
-  && rm -rf $SONARQUBE_HOME/bin/*
-
-VOLUME ["$SONARQUBE_HOME/data", "$SONARQUBE_HOME/extensions"]
-
-WORKDIR $SONARQUBE_HOME
-COPY run.sh $SONARQUBE_HOME/bin/
 COPY sonar-objective-c-plugin-0.4.0.jar $SONARQUBE_HOME/extensions/plugins/
-ENTRYPOINT ["./bin/run.sh"]
+
+ENTRYPOINT ["/app/init"]
+CMD ["app:start"]
