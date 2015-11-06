@@ -9,7 +9,8 @@ ENV DB_PASS=xaexohquaetiesoo
 ENV DB_NAME=sonar
 ENV SONARQUBE_HOME /opt/sonarqube
 
-RUN apt-get install -y --force-yes default-jdk
+RUN apt-get install -y --force-yes openjdk-7-jre
+
 
 RUN locale-gen en_US.UTF-8
 RUN update-locale LANG=en_US.UTF-8
