@@ -47,6 +47,5 @@ RUN rm -rf /opt/sonar/conf/sonar.properties
 COPY sonar.properties /opt/sonar/conf/
 EXPOSE 9000
 EXPOSE 443
-ENTRYPOINT ["/app/init"]
-CMD ["/usr/local/bin/run &; app:start"]
+CMD ["/usr/local/bin/run &; /app/init app:start"]
 
