@@ -45,8 +45,10 @@ VOLUME /opt/sonar/extensions
 VOLUME /opt/sonar/logs/
 
 COPY sonar-objective-c-plugin-0.4.0.jar $SONARQUBE_HOME/extensions/plugins/
-COPY sonar.properties /opt/sonar/conf
+RUN rm -rf /opt/sonar/conf/sonar.properties
+COPY sonar.properties /opt/sonar/conf/
 EXPOSE 9000
 EXPOSE 443
 ENTRYPOINT ["/app/init"]
 CMD ["app:start"]
+
