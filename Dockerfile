@@ -9,6 +9,7 @@ ENV DB_PASS=xaexohquaetiesoo
 ENV DB_NAME=sonar
 ENV SONARQUBE_HOME /opt/sonarqube
 
+RUN apt-get install -y --force-yes tzdata-java
 RUN apt-get install -y --force-yes openjdk-7-jre-headless
 RUN apt-get install -y --force-yes openjdk-7-jre
 
