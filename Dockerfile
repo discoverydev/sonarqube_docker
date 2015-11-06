@@ -30,8 +30,6 @@ RUN chmod +x /usr/local/bin/run
 
 VOLUME ["/var/lib/postgresql"]
 EXPOSE 5432
-CMD ["/usr/local/bin/run &"]
-
 
 RUN echo "deb http://downloads.sourceforge.net/project/sonar-pkg/deb binary/" >> /etc/apt/sources.list
 RUN apt-get update && apt-get clean ### Sonar version 5.1 - timestamp
@@ -50,5 +48,5 @@ COPY sonar.properties /opt/sonar/conf/
 EXPOSE 9000
 EXPOSE 443
 ENTRYPOINT ["/app/init"]
-CMD ["app:start &"]
+CMD ["/usr/local/bin/run &; app:start"]
 
