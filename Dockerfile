@@ -1,9 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Discovery Dev <adsdiscoveryteam@pillartechnology.com>
 
-ENV POSTGRESQL_USER=sonar
-ENV POSTGRESQL_PASS=xaexohquaetiesoo
-ENV POSTGRESQL_DB=sonar
 ENV DB_USER=sonar
 ENV DB_PASS=xaexohquaetiesoo
 ENV DB_NAME=sonar
@@ -32,6 +29,5 @@ COPY sonar.properties /opt/sonar/conf/
 EXPOSE 9000
 EXPOSE 443
 
-#CMD ["/usr/local/bin/run & /app/init app:start"]
-RUN /usr/local/bin/run
-RUN /app/init app:start
+ENTRYPOINT ["/app/init"]
+CMD ["app:start"]
